@@ -1,0 +1,76 @@
+# Django
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+# Documentation (not needed for evaluation)
+00_COMPLETION_REPORT.md
+API_TESTING.md
+ARCHITECTURE.md
+COMPLETION_SUMMARY.md
+FINAL_SUMMARY.md
+*.md
+
+# Test files
+test_apis.ps1
+*.xlsx
+*.xls
+
+# Docker volumes
+postgres_data/
+staticfiles/
+GITHUB_SUBMISSION.md
+IMPLEMENTATION_GUIDE.md
+INDEX.md
+QUICKSTART.md
+VERIFICATION.md
+README.md
+START_HERE.md
+
+# Other unnecessary files
+Backend Assignment.pdf
+postman_collection.json
+.github/
+.dist/
+
+# Docker
+staticfiles/

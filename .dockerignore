@@ -1,0 +1,46 @@
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.egg-info
+dist
+build
+.Python
+env
+venv
+ENV
+
+# Django
+*.log
+db.sqlite3
+local_settings.py
+.env.local
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+.pytest_cache
+.coverage
+htmlcov
+
+# Git
+.git
+.gitignore
+.github
+
+# Documentation
+*.md
+.dist
+
+# Other
+node_modules
+.env.example
