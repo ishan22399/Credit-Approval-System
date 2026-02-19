@@ -1,5 +1,5 @@
 """
-Serializers for core app.
+Serializers for validating requests and responses
 """
 
 from rest_framework import serializers

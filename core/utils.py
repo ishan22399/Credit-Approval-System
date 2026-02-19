@@ -8,15 +8,9 @@ from django.db.models import Sum, Count, Q
 
 
 def calculate_emi(principal, monthly_rate, tenure_months):
-    """
-    Calculate monthly EMI using compound interest formula.
-    
-    EMI = P * r * (1+r)^n / ((1+r)^n - 1)
-    where:
-        P = principal (loan amount)
-        r = monthly interest rate (annual rate / 12 / 100)
-        n = number of months
-    """
+    # compound interest formula:
+    # EMI = P * r * (1+r)^n / ((1+r)^n - 1)
+    # basically: loan amount * monthly rate / number of months with interest
     if monthly_rate == 0:
         return principal / tenure_months
     
@@ -34,15 +28,12 @@ def calculate_emi(principal, monthly_rate, tenure_months):
 
 
 def calculate_credit_score(customer):
-    """
-    Calculate credit score (0-100) based on:
-    1. Past loans paid on time (30%)
-    2. Number of loans taken (20%)
-    3. Loan activity in current year (20%)
-    4. Loan approved volume (30%)
-    
-    Special rule: If sum of current loans > approved_limit, score = 0
-    """
+    # your score is 0-100 based on:
+    # 1. did you pay EMIs on time (30%)
+    # 2. how many loans you took (20%)
+    # 3. did you take loans this year (20%)
+    # 4. total money you borrowed (30%)
+    # if you owe more than your limit, score = 0
     
     # Check if current debt exceeds approved limit
     if customer.current_debt > customer.approved_limit:

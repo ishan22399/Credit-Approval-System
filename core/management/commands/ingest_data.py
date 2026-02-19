@@ -11,17 +11,16 @@ import os
 
 
 class Command(BaseCommand):
-    help = 'Ingest customer and loan data from Excel files'
+    help = 'Import customer and loan data from Excel files'
 
     def handle(self, *args, **options):
+        # run both imports
         self.ingest_customers()
         self.ingest_loans()
         self.stdout.write(self.style.SUCCESS('Data ingestion completed successfully.'))
 
     def ingest_customers(self):
-        """
-        Ingest customer data from customer_data.xlsx
-        """
+        # read customers from Excel file and save to database
         # Look for Excel file in project root (/app/)
         excel_path = os.path.join('/app', 'customer_data.xlsx')
         
@@ -32,7 +31,7 @@ class Command(BaseCommand):
         try:
             df = pd.read_excel(excel_path)
             
-            # Map Excel columns to model fields
+            # Excel columns have spaces, so we map them to our database column names
             column_mapping = {
                 'Customer ID': 'customer_id',
                 'First Name': 'first_name',
@@ -43,10 +42,10 @@ class Command(BaseCommand):
                 'Approved Limit': 'approved_limit',
             }
             
-            # Rename columns
+            # rename the Excel columns
             df = df.rename(columns=column_mapping)
             
-            # Also add current_debt if not present
+            # if current_debt is missing, set it to 0
             if 'current_debt' not in df.columns:
                 df['current_debt'] = 0.0
             

@@ -1,6 +1,4 @@
-"""
-API Views for core app.
-"""
+# all the APIs for the system
 
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -30,12 +28,8 @@ from .utils import (
 
 @api_view(['POST'])
 def register(request):
-    """
-    Register a new customer.
-    
-    Calculates approved_limit = 36 * monthly_salary (rounded to nearest lakh)
-    Auto-generates customer_id as max existing + 1
-    """
+    # when someone wants to register as a customer
+    # we auto-generate their customer ID and calculate how much they can borrow
     serializer = CustomerRegistrationSerializer(data=request.data)
     
     if serializer.is_valid():
@@ -46,18 +40,18 @@ def register(request):
         age = serializer.validated_data['age']
         monthly_salary = serializer.validated_data['monthly_salary']
         
-        # Check if customer already exists
+        # check if already registered with this phone number
         if Customer.objects.filter(phone_number=phone_number).exists():
             return Response(
                 {'error': 'Customer with this phone number already exists.'},
                 status=status.HTTP_400_BAD_REQUEST
             )
         
-        # Auto-generate customer_id (max + 1)
+        # find the highest customer ID and add 1
         max_customer_id = Customer.objects.aggregate(Max('customer_id'))['customer_id__max'] or 0
         new_customer_id = max_customer_id + 1
         
-        # Calculate approved limit: 36 * monthly_salary, rounded to nearest lakh
+        # 36 times salary, rounded to nearest 100,000
         approved_limit = round_to_nearest_lakh(36 * monthly_salary)
         
         # Create customer
@@ -89,15 +83,7 @@ def register(request):
 
 @api_view(['POST'])
 def check_eligibility(request):
-    """
-    Check loan eligibility based on credit score.
-    
-    Returns:
-        - approval: bool
-        - interest_rate: float (original)
-        - corrected_interest_rate: float (based on credit rating)
-        - monthly_installment: float (EMI)
-    """
+    # check if someone can get a loan and what interest rate they should get
     serializer = CheckEligibilitySerializer(data=request.data)
     
     if serializer.is_valid():
@@ -142,15 +128,7 @@ def check_eligibility(request):
 
 @api_view(['POST'])
 def create_loan(request):
-    """
-    Create a new loan after checking eligibility.
-    
-    Returns:
-        - loan_id: int (or null if rejected)
-        - loan_approved: bool
-        - message: str
-        - monthly_installment: float
-    """
+    # make a new loan if the person is eligible
     serializer = CreateLoanSerializer(data=request.data)
     
     if serializer.is_valid():

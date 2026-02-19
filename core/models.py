@@ -1,15 +1,15 @@
-"""
-Models for core app.
-"""
+# Models for customer and loan stuff
 
 from django.db import models
 from django.utils import timezone
 
 class Customer(models.Model):
-    customer_id = models.IntegerField(primary_key=True)  # Changed from AutoField to IntegerField
+    # IntegerField so we can import existing customer IDs from Excel
+    customer_id = models.IntegerField(primary_key=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    phone_number = models.CharField(max_length=20, unique=True, null=True, blank=True)  # Allow null for imported data
+    # can be null because Excel data doesn't have phone numbers
+    phone_number = models.CharField(max_length=20, unique=True, null=True, blank=True)
     age = models.IntegerField()
     monthly_salary = models.FloatField()
     approved_limit = models.FloatField()
@@ -30,7 +30,8 @@ class Customer(models.Model):
 
 
 class Loan(models.Model):
-    loan_id = models.IntegerField(primary_key=True)  # Changed from AutoField to IntegerField
+    # IntegerField to keep loan IDs from imported Excel data
+    loan_id = models.IntegerField(primary_key=True)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='loans')
     loan_amount = models.FloatField()
     tenure = models.IntegerField()  # months
@@ -49,6 +50,7 @@ class Loan(models.Model):
     def __str__(self):
         return f"Loan {self.loan_id} - Customer {self.customer.customer_id}"
 
+    # how many EMIs still left to pay
     @property
     def repayments_left(self):
         return self.tenure - self.emis_paid_on_time

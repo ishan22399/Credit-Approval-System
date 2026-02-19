@@ -1,10 +1,11 @@
 """
-URL routing for core app.
+URL routing for all the APIs
 """
 
 from django.urls import path
 from . import views
 
+# all the API endpoints
 urlpatterns = [
     path('register/', views.register, name='register'),
     path('check-eligibility/', views.check_eligibility, name='check-eligibility'),
