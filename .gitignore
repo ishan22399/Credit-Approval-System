@@ -40,7 +40,9 @@ db.sqlite3
 Thumbs.db
 
 # Environment
-.env
+# .env files with no sensitive keys can be included
+
+# Old .env backups
 .env.local
 # Documentation (not needed for evaluation)
 00_COMPLETION_REPORT.md
@@ -48,12 +50,15 @@ API_TESTING.md
 ARCHITECTURE.md
 COMPLETION_SUMMARY.md
 FINAL_SUMMARY.md
-*.md
+GITHUB_SUBMISSION.md
+IMPLEMENTATION_GUIDE.md
+INDEX.md
+QUICKSTART.md
+START_HERE.md
+VERIFICATION.md
 
 # Test files
 test_apis.ps1
-*.xlsx
-*.xls
 
 # Docker volumes
 postgres_data/
